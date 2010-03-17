@@ -5,8 +5,8 @@
 
 <!--
     $RCSfile$
-    $Revision$
-    $Date$
+    $Revision: 7849 $
+    $Date: 2007-03-31 10:59:55 -0700 (Sat, 31 Mar 2007) $
 -->
 
 <project name="Smack Release Script" default="all" basedir="..">

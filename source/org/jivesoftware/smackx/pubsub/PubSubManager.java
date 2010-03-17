@@ -31,6 +31,9 @@ import org.jivesoftware.smackx.pubsub.packet.PubSub;
 import org.jivesoftware.smackx.pubsub.packet.PubSubNamespace;
 import org.jivesoftware.smackx.pubsub.packet.SyncPacketSend;
 import org.jivesoftware.smackx.pubsub.util.NodeUtils;
+import org.jivesoftware.smackx.pubsub.OAuthLeafNode;
+import org.jivesoftware.smackx.pubsub.oauth.OAuthParameters;
+import org.jivesoftware.smackx.pubsub.oauth.OAuthNodeExtension;
 
 /**
  * This is the starting point for access to the pubsub service.  It
@@ -138,6 +141,29 @@ final public class PubSubManager
 		
 		return newNode;
 	}
+	
+	/**
+	* Retrieves an OAuth node.
+	*/
+	public OAuthLeafNode getOAuthNode(String id) 
+	  throws XMPPException
+	{
+	  Node node = nodeMap.get(id);
+		
+		if (node == null)
+		{
+			DiscoverInfo info = new DiscoverInfo();
+			info.setTo(to);
+			info.setNode(id);
+			
+			DiscoverInfo infoReply = (DiscoverInfo)SyncPacketSend.getReply(con, info);
+			
+			node = new OAuthLeafNode(con, id);
+			node.setTo(to);
+			nodeMap.put(id, node);
+		}
+		return (OAuthLeafNode)node;
+	}
 
 	/**
 	 * Retrieves the requested node, if it exists.  It will throw an 
@@ -207,6 +233,21 @@ final public class PubSubManager
 		throws XMPPException
 	{
 		Packet reply = sendPubsubPacket(Type.GET, new NodeExtension(PubSubElementType.SUBSCRIPTIONS));
+		SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS.getElementName(), PubSubElementType.SUBSCRIPTIONS.getNamespace().getXmlns());
+		return subElem.getSubscriptions();
+	}
+	
+	/**
+	 * Gets the subscriptions on the root node with OAuth.
+	 * 
+	 * @return List of exceptions
+	 * 
+	 * @throws XMPPException
+	 */
+	public List<Subscription> getOAuthSubscriptions(OAuthParameters params)
+		throws XMPPException
+	{
+		Packet reply = sendPubsubPacket(Type.GET, new OAuthNodeExtension(PubSubElementType.SUBSCRIPTIONS, params));
 		SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS.getElementName(), PubSubElementType.SUBSCRIPTIONS.getNamespace().getXmlns());
 		return subElem.getSubscriptions();
 	}

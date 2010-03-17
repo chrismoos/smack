@@ -1,7 +1,7 @@
 /**
  * $RCSfile$
- * $Revision$
- * $Date$
+ * $Revision: 2114 $
+ * $Date: 2003-09-27 20:27:14 -0700 (Sat, 27 Sep 2003) $
  *
  * Copyright (C) 2002-2003 Jive Software. All rights reserved.
  * ====================================================================

@@ -1,7 +1,7 @@
 <%--
   - $RCSfile$
-  - $Revision$
-  - $Date$
+  - $Revision: 7394 $
+  - $Date: 2007-03-07 12:27:03 -0700 (Wed, 07 Mar 2007) $
   -
   - Copyright (C) 2002-2003 Jive Software. All rights reserved.
   - 

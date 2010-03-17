@@ -151,7 +151,7 @@ abstract public class Node
 		PubSub reply = (PubSub)sendPubsubPacket(Type.SET, new SubscribeExtension(jid, getId()));
 		return (Subscription)reply.getExtension(PubSubElementType.SUBSCRIPTION);
 	}
-	
+
 	/**
 	 * The user subscribes to the node using the supplied jid and subscription
 	 * options.  The bare jid portion of this one must match the jid for the 
