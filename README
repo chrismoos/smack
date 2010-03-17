@@ -1,0 +1,26 @@
+This project is a fork of the Smack XMPP library at Ignite Realtime.
+
+http://www.igniterealtime.org/projects/smack/
+
+I've added OAuth support for PubSub.
+
+Example
+=================
+
+NonceService nonceService = new InMemoryNonceService()
+PubSubManager manager = new PubSubManager(connection, "john@test.com")
+OAuthToken consumerToken = new OAuthToken("consumerkey", "consumersecret")
+OAuthToken accessToken = new OAuthToken("accesskey", "accesssecret")
+OAuthToken generalToken = new OAuthToken("generalkey", "generalsecret")
+
+OAuthParameters params = new OAuthParameters(consumerToken, accessToken, nonceService, "user@mydomain.com", "john@test.com")
+
+def node = manager.getOAuthNode("/api/0.1/user/${userToken}")
+node.setOAuthParameters(params)
+
+
+/* Subscribe to a node */
+node.subscribe("/some/node")
+
+/* Get subscriptions */
+manager.getOAuthSubscriptions(new OAuthParameters(consumerToken, generalToken, nonceService, "user@mydomain.com","john@test.com"))
